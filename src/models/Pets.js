@@ -1,0 +1,27 @@
+import { Schema } from "mongoose";
+
+export const PetSchema = new Schema(
+
+  {
+    name: { type: String, minLength: 1, maxLength: 100, required: true },
+    imgUrl: { type: String, minLength: 1, maxLength: 1000, required: true },
+    age: { type: Number, min: 0, max: 5000, required: true },
+    likes: [{ type: String, minLength: 0, maxLength: 100 }],
+    isVaccinated: { type: Boolean, required: true, default: true },
+    status: { type: String, enum: ['adopted', 'adoptable'], required: true, default: 'adopted' },
+    species: { type: String, enum: ['cat', 'dog', 'bird', 'capybara'], required: true, default: 'dog' },
+    creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' }
+  },
+
+  {
+    timestamps: true,
+    toJSON: { virtuals: true }
+  }
+)
+
+PetSchema.virtual('creator', {
+  ref: 'Account',
+  localField: 'creatorId',
+  foreignField: '_id',
+  justOne: true
+})

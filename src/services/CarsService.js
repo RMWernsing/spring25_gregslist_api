@@ -16,7 +16,7 @@ class CarsService {
   }
   async getCarsByQuery(carQuery) {
     const pageNumber = parseInt(carQuery.page) || 1
-    const carLimit = 5
+    const carLimit = 10
     const skipAmount = pageNumber * carLimit - carLimit
     delete carQuery.page
 
